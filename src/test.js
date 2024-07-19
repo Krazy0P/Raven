@@ -17,3 +17,4 @@ for (const folder of commandFolders) {
         }
     }
 }
+
