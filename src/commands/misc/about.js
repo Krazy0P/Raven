@@ -18,9 +18,9 @@ module.exports = {
                 { name: "Created On", value: "<t:1668320684:f>" },
                 { name: "About Me", value: "Hey there! I was made for fun." },
             )
-            .setThumbnail("https://i.pinimg.com/564x/11/b2/cd/11b2cdcdc580c7a6e64f3343eb02d1be.jpg") // Xiao gif
+            .setThumbnail("https://i.pinimg.com/564x/11/b2/cd/11b2cdcdc580c7a6e64f3343eb02d1be.jpg")
             .setTimestamp()
-            .setFooter({ text: "Made with Warmth", iconURL: "https://cdn.discordapp.com/emojis/883003301132632085.gif?size=96" }); // Heart gif
+            .setFooter({ text: "Made with Warmth", iconURL: "https://cdn.discordapp.com/emojis/883003301132632085.gif?size=96" });
 
         await interaction.reply({ embeds: [embed] });
     },
