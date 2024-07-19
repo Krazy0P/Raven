@@ -16,7 +16,7 @@ module.exports = {
             })
             .addFields(
                 { name: "Created On", value: "<t:1668320684:f>" },
-                { name: "About Me", value: "Hey there! I was made for fun."}
+                { name: "About Me", value: "Hey there! I was made for fun." },
             )
             .setThumbnail("https://i.pinimg.com/564x/11/b2/cd/11b2cdcdc580c7a6e64f3343eb02d1be.jpg") // Xiao gif
             .setTimestamp()
