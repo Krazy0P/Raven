@@ -8,12 +8,9 @@ const args = process.argv.slice(2);
 
 console.log(`Deleting ${args.length} command(s)`);
 
-(async () => {
-    for (const commandID of args) {
-        await rest.delete(Routes.applicationCommand(process.env.CLIENT_ID, commandID))
-        .then(() => console.log(`Successfully deleted command ${commandID}`))
-        .catch(console.error);
-    }
-})();
-
-console.log(`Delelted ${args.length} command(s)`)
+for (const commandID of args) {
+    rest.delete(Routes.applicationCommand(process.env.CLIENT_ID, commandID))
+    .then(() => console.log(`Successfully deleted command ${commandID}`))
+    .catch(console.error);
+}
+    
