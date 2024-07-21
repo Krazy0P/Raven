@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const moment = require('moment');
+const moment = require("moment");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,26 +31,20 @@ module.exports = {
             ViewAuditLog: "View Audit Log",
         };
 
-
         let keyPerms = member.permissions
             .toArray()
             .sort()
             .map((value) => perm[value])
-            .filter(value => value)
+            .filter((value) => value);
 
         let position = "Member";
-            
-        if (await interaction.guild.ownerId === user.id)
-            position = "Owner";
-        else if (keyPerms.includes('Administrator'))
-            position = "Admin";
-        else if (keyPerms.includes('Manage Server'))
-            position = "Manager";
-        else if (keyPerms.includes('Kick Members') || keyPerms.includes('Ban Members'))
-            position = "Moderator";
-            
         let roleList = [];
         let embedColor = 0;
+
+        if ((await interaction.guild.ownerId) === user.id) position = "Owner";
+        else if (keyPerms.includes("Administrator")) position = "Admin";
+        else if (keyPerms.includes("Manage Server")) position = "Manager";
+        else if (keyPerms.includes("Kick Members") ||keyPerms.includes("Ban Members")) position = "Moderator";
 
         for (const role of member.roles.cache) {
             if (embedColor === 0 && role[1].color !== 0)
@@ -59,25 +53,23 @@ module.exports = {
             if (role[0] !== interaction.guild.id)
                 roleList.push(`<@&${role[0]}>`);
         }
-        let number = Number(user.id)
-        console.log(number)
-        console.log(number / Math.pow(2,22) )
+
         const profileEmbed = new EmbedBuilder()
             .setColor(embedColor)
             .setDescription(`<@${user.id}>`)
-            .setAuthor({name: user.username, iconURL: user.displayAvatarURL({ size: 4096 })})
+            .setAuthor({ name: user.username, iconURL: user.displayAvatarURL({ size: 4096 }) })
             .setThumbnail(user.displayAvatarURL({ size: 4096 }))
             .addFields(
-                { name: 'Joined On', value: moment.unix(member.joinedAt / 1000).format('llll'), inline:true},
-                { name: 'Created On', value: moment.unix((Number(member.id)/4194304 +1420070400000)/1000).format('llll'), inline: true },
+                { name: "Joined On", value: moment.unix(member.joinedAt / 1000).format("llll"), inline: true },
+                { name: "Created On", value: moment.unix((Number(member.id) / 4194304 + 1420070400000) / 1000).format("llll"), inline: true })
+            .addFields(
+                { name: `Roles [${roleList.length}]`, value: roleList.join(" ") },
+                { name: "Permissions",value: keyPerms.length == 0 ? "None" : keyPerms.join(", ")},
+                { name: "Position", value: position }
+            )
+            .setTimestamp()
+            .setFooter({ text: `User ID: ${user.id}`, iconURL: "https://cdn.discordapp.com/emojis/883003301132632085.gif?size=96" });
 
-            ).addFields(
-                { name: `Roles [${roleList.length}]`, value: roleList.join(' ')},
-                { name: 'Permissions', value: keyPerms.length == 0? 'None': keyPerms.join(', ')},
-                { name: 'Position', value: position}
-            ).setTimestamp()
-            .setFooter({ text: `User ID: ${user.id}`, iconURL:'https://cdn.discordapp.com/emojis/883003301132632085.gif?size=96'})
-
-        await interaction.reply({ embeds:[profileEmbed] });
+        await interaction.reply({ embeds: [profileEmbed] });
     },
 };
