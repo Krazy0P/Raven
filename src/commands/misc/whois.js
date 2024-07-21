@@ -63,7 +63,7 @@ module.exports = {
                 { name: "Joined On", value: moment.unix(member.joinedAt / 1000).format("llll"), inline: true },
                 { name: "Created On", value: moment.unix((Number(member.id) / 4194304 + 1420070400000) / 1000).format("llll"), inline: true })
             .addFields(
-                { name: `Roles [${roleList.length}]`, value: roleList.join(" ") },
+                { name: `Roles [${roleList.length}]`, value: roleList.length == 0? "None":roleList.join(" ") },
                 { name: "Permissions",value: keyPerms.length == 0 ? "None" : keyPerms.join(", ")},
                 { name: "Position", value: position }
             )
