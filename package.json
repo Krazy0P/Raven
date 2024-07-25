@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd src && node index.js",
-    "delcmd": "cd src && node delcmd.js"
+    "deployglobal": "cd src && node deploy.js",
+    "delcmd": "cd src && node delcmd.js",
+    "datalogs": "cd src && node datalogs.js"
   },
   "keywords": [],
   "author": "",
