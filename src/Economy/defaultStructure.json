@@ -1,0 +1,11 @@
+{
+    "pocket": 0,
+    "bank": 0,
+    "bankLimit": 5000,
+    "daily" : {
+        "currentStreak": 0,
+        "currency": 5000,
+        "lastClaimed": 0,
+        "bonus":0
+    }
+}
