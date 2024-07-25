@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { Economy } = require("../../economy");
+const { Economy } = require("../../Economy/economy");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,13 +18,13 @@ module.exports = {
         const data = new Economy(user.id).data;
         
         const balanceEmbed = new EmbedBuilder()
-            .setColor('DarkButNotBlack')
+            .setColor("Blurple")
             .setTitle(`${user.globalName}'s Balance`)
             .setAuthor({ name: user.username, iconURL: user.avatarURL({ size: 4096 }) })
             .addFields(
                 { name: "Pocket", value: `${data.pocket}`, inline: true},
                 { name: "Bank", value: `${data.bank}/${data.bankLimit}`, inline: true}
-            ).setTimestamp()
+            )
 
         await interaction.reply({ embeds: [balanceEmbed] });
 
