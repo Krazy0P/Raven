@@ -27,6 +27,7 @@ folderSetup(
 folderSetup(
     folderName = "data", 
     files = [
-        "user"
+        "user",
+        "emoji"
     ]
 );
