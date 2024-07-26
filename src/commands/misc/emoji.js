@@ -18,7 +18,7 @@ module.exports = {
         if ((serverEmojiData.time + (coolDown * 1000)) > (interaction.id / 4194304 + 1420070400000)) {
             return await interaction.reply(`You can use the command again in <t:${parseInt(serverEmojiData.time/1000) + (coolDown - 10)}:R>`)
         } else {
-            serverEmojiData.time = interaction.id / 4194304 + 1420070400000;
+            serverEmojiData.time = parseInt(interaction.id / 4194304) + 1420070400000;
         }
 
         const response = await fetch("https://emoji.gg/");
