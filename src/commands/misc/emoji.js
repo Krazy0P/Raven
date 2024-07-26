@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const fs = require("fs");
-const path = require("path");
+const { Guild } = require("../../info/guild");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -9,47 +8,59 @@ module.exports = {
     
     async execute(interaction) {
 
+        const guildId = await interaction.guild.id;
+
+        const emojiGuild = new Guild(guildId);
+        const serverEmojiData = emojiGuild.guild;
+
+        const coolDown = 10; // cooldown in seconds
+
+        if ((serverEmojiData.time + (coolDown * 1000)) > (interaction.id / 4194304 + 1420070400000)) {
+            return await interaction.reply(`You can use the command again in <t:${parseInt(serverEmojiData.time/1000) + (coolDown - 10)}:R>`)
+        } else {
+            serverEmojiData.time = interaction.id / 4194304 + 1420070400000;
+        }
+
         const response = await fetch("https://emoji.gg/");
         const body = await response.text();
 
-        const srcs = body.split(" ")
-            .filter(text => text.includes("data-src=\"https://cdn3.emoji.gg/emojis"))
-            .map(text => text.substring(39,text.length-1))
+        let emojis = body.split(" ")
+            .filter(text => 
+                text.includes("data-src=\"https://cdn3.emoji.gg/emojis")
+            )
+            .map(text => 
+                text.substring(39,text.length-1)
+            )
 
-        const emojiID = srcs.at(Number(Math.random() * srcs.length));
-
-        const filePath = "../../../data/emoji.json";
-
-        const serverEmojiPath = path.join(__dirname,filePath);
-        const serverEmojiData = JSON.parse(fs.readFileSync(serverEmojiPath));
+        let emojiID = emojis.at(Number(Math.random() * emojis.length));
 
         let i = 1;
 
-        const guildId = await interaction.guild.id;
-
-        if (serverEmojiData[guildId] === undefined) {
-            serverEmojiData[guildId] = [emojiID]
-        } 
-        else {
-            for (;serverEmojiData[guildId].includes(emojiID) && i <= srcs.length;i++) {
-                emojiID = srcs.at(Number(Math.random() * srcs.length))
-            }
-            if (i===srcs.length) {
-                return await interaction.reply("Oops! something went wrong");
-            } else {
-                serverEmojiData[guildId].push(emojiID)
-            }
+        for (;serverEmojiData.emojis.includes(emojiID) && i <= emojis.length;i++) {
+            emojis = emojis.splice(emojis.indexOf(emojiID),1);
+            emojiID = emojis.at(Number(Math.random() * emojis.length));
+        }
+        if (i===emojis.length) {
+            return await interaction.reply("Oops! something went wrong");
+        } else {
+            serverEmojiData.emojis.push(emojiID)
+            emojiGuild.saveData();
         }
 
-        fs.writeFileSync(serverEmojiPath, JSON.stringify(serverEmojiData,null,2));
+
+        let emojiString = "";
 
         await interaction.guild.emojis.create({
             name: emojiID.substring( emojiID.indexOf("-") + 1 , emojiID.lastIndexOf(".") ).replace("-","_"),
             attachment: `https://cdn3.emoji.gg/emojis/${emojiID}`
-        }).catch((error) => {
+        }).then((emoji) => {
+            emojiString = `<:${emoji.name}:${emoji.id}>`
+        })
+        .catch((error) => {
             console.log(error)
         })
 
-        await interaction.reply("Emoji has been added!")
+        await interaction.reply(`Emoji has been added!`)
+        await interaction.followUp(emojiString)
     }
 }
