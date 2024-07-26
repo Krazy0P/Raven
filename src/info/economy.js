@@ -1,27 +1,26 @@
 const fs = require("fs");
 const path = require("path");
-require("../../data/user.json")
 
 class Economy {
 
     #dataFilePath = path.join(__dirname, "../../data/user.json");
     #userDataList = JSON.parse(fs.readFileSync(this.#dataFilePath));
 
-    #defaultStructurePath = path.join(__dirname,"./defaultStructure.json")
-    #defaultDatStructure = JSON.parse(fs.readFileSync(this.#defaultStructurePath))
+    defaultStructPath = path.join(__dirname,"./userStruct.json")
+    defaultDataStruct = JSON.parse(fs.readFileSync(this.defaultStructPath))
 
-    constructor(userID) {
+    constructor( userID ) {
 
         if (!this.#userDataList[userID]) {
-            this.#userDataList[userID] = this.#defaultDatStructure;
+            this.#userDataList[userID] = this.defaultDataStruct;
         }
         
-        this.data = this.#userDataList[userID]
+        this.data = this.#userDataList[userID];
         
-        this.#saveData();
+        this.saveData();
     }
 
-    #saveData() {
+    saveData() {
         fs.writeFileSync(this.#dataFilePath, JSON.stringify(this.#userDataList, null, 2));
     }
 }
