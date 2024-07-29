@@ -13,7 +13,7 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        const user = interaction.options.getUser("user") == null ? interaction.user : interaction.options.getUser("user");
+        const user = interaction.options.getUser("user") || interaction.user;
         const member = await interaction.guild.members.fetch(user.id);
 
         const perm = {
