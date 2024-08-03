@@ -1,19 +1,22 @@
 const fs = require("fs");
 const path = require("path");
+const { Logs, LogType } = require("./log");
+
 
 class Guild {
-    #serverEmojiPath = path.join(__dirname,"../../data/emoji.json");
-    #serverEmojiData = JSON.parse(fs.readFileSync(this.#serverEmojiPath));
+    #serverPath = path.join(__dirname,"../../data/server.json");
+    #serverData = JSON.parse(fs.readFileSync(this.#serverPath));
 
+    logs;
     constructor( guildID ) {
 
-        if (!this.#serverEmojiData[guildID]) {
-            this.#serverEmojiData[guildID] = {};
+        if (!this.#serverData[guildID]) {
+            this.#serverData[guildID] = {};
         }
 
-        this.guild = this.#serverEmojiData[guildID];
+        this.guild = this.#serverData[guildID];
 
-        this.saveData();
+        this.logs = new Logs(this.guild)
 
     }
 
@@ -40,10 +43,10 @@ class Guild {
     }
 
     saveData() {
-        fs.writeFileSync(this.#serverEmojiPath, JSON.stringify(this.#serverEmojiData, null, 2));
+        fs.writeFileSync(this.#serverPath, JSON.stringify(this.#serverData, null, 2));
     }
+
 }
 
 
-
-module.exports = { Guild }
+module.exports = { Guild, LogType }

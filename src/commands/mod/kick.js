@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require("discord.js");
+const { Guild, LogType } = require("../../info/guild");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -45,11 +46,16 @@ module.exports = {
         const userEmbed = new EmbedBuilder()
             .setColor('NotQuiteBlack')
             .setDescription(`Hey ${user}, You have been kicked from ${guildUser.guild.name} | ${reason}`);
+
         const guildEmbed = new EmbedBuilder()
             .setColor('Green')
             .setDescription(`${user} has been kicked successfully. | ${reason}`);
 
         await user.send({ embeds: [userEmbed]});
+
+        const server = new Guild(interaction.guild.id);
+        server.logs.appendLog(LogType.kick,interaction, reason);
+        server.saveData();
         
         await guildUser.kick({ reason:reason }).catch((error) => {
             console.log(error)
