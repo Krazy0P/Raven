@@ -41,7 +41,7 @@ module.exports = {
         let roleList = [];
         let embedColor = 0;
 
-        if ((await interaction.guild.ownerId) === user.id) position = "Owner";
+        if (interaction.guild.ownerId === user.id) position = "Owner";
         else if (keyPerms.includes("Administrator")) position = "Admin";
         else if (keyPerms.includes("Manage Server")) position = "Manager";
         else if (keyPerms.includes("Kick Members") ||keyPerms.includes("Ban Members")) position = "Moderator";
