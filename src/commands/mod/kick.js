@@ -38,7 +38,7 @@ module.exports = {
             })
         } else if (!guildUser.kickable) {
             return await interaction.reply({ 
-                content: "Sadly, the user can't be kicked", 
+                content: `Sadly, I can't kick ${user}`, 
                 ephemeral: true 
             })
         }
