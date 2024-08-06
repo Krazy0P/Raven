@@ -3,7 +3,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("about")
-        .setDescription("Info about the bot!"),
+        .setDescription("Info about the bot!")
+        .setDMPermission(true),
 
     async execute(interaction) {
         const embed = new EmbedBuilder()
