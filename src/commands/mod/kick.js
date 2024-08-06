@@ -5,6 +5,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("kick")
         .setDescription("Kicks a user from the server")
+        .setDMPermission(false)
         .addUserOption((option) =>
             option
                 .setName("user")

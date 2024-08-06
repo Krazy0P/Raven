@@ -4,7 +4,8 @@ const { Guild } = require("../../info/guild");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("emoji")
-        .setDescription("Adds a random emoji to your server"),
+        .setDescription("Adds a random emoji to your server")
+        .setDMPermission(false),
     
     async execute(interaction) {
 

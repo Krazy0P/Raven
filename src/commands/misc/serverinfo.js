@@ -4,7 +4,8 @@ const moment = require("moment")
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("serverinfo")
-        .setDescription("Get information about the server"),
+        .setDescription("Get information about the server")
+        .setDMPermission(false),
 
     async execute(interaction) {
         const guild = interaction.guild;
