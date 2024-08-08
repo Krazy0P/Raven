@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
 const { Guild, LogType } = require("../../info/guild");
 
 module.exports = {
@@ -6,12 +6,14 @@ module.exports = {
         .setName("kick")
         .setDescription("Kicks a user from the server")
         .setDMPermission(false)
+        .setDefaultMemberPermissions(PermissionFlagsBits.KickMembers)
         .addUserOption((option) =>
             option
                 .setName("user")
                 .setDescription("Select a user to kick from the server")
                 .setRequired(true)
-        ).addStringOption((option) =>
+        )
+        .addStringOption((option) =>
             option
                 .setName("reason")
                 .setDescription("Specify a reason for the kick")
@@ -19,14 +21,6 @@ module.exports = {
         ),
 
     async execute(interaction) {
-
-        if (!interaction.memberPermissions.has(PermissionsBitField.Flags.KickMembers)) {
-            return await interaction.reply({ 
-                content: "Seems like... You dont have the permission to kick a user", 
-                ephemeral: true 
-            });
-        }        
-
         const user = interaction.options.getUser("user");
         const reason = interaction.options.getString("reason") || "No reason was specified";
         
