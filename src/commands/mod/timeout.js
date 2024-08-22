@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
-const { Logs, LogType } = require("../../info/guild");
+const { appendLog, LogType } = require("../../info/mod");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -77,8 +77,7 @@ module.exports = {
             .setColor('Green')
             .setDescription(`${user} has been timed out successfully. | ${reason}`);
 
-        const logs = new Logs();
-        logs.appendLog(LogType.timeout,interaction, timeDuration);
+        appendLog(LogType.timeout,interaction, timeDuration);
 
         await user.send({ embeds: [userEmbed]});
         

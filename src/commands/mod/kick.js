@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
-const { Logs, LogType } = require("../../info/guild");
+const { appendLog, LogType } = require("../../info/mod");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -47,8 +47,7 @@ module.exports = {
             .setColor('Green')
             .setDescription(`${user} has been kicked successfully. | ${reason}`);
 
-        const logs = new Logs();
-        logs.appendLog(LogType.kick,interaction);
+        appendLog(LogType.kick,interaction);
 
         await user.send({ embeds: [userEmbed]});
         

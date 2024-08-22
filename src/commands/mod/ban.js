@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
-const { Guild, Logs, LogType } = require("../../info/guild");
+const { appendLog, LogType } = require("../../info/mod");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -37,8 +37,7 @@ module.exports = {
             })
         }
 
-        const logs = new Logs();
-        logs.appendLog(LogType.ban, interaction);
+        appendLog(LogType.ban, interaction);
 
         if (guildUser) {
             const userEmbed = new EmbedBuilder()
