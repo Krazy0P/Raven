@@ -1,27 +1,23 @@
-const fs = require("fs");
-const path = require("path");
+const { query } = require("../sqlsetup");
 
 class Economy {
-
-    #dataFilePath = path.join(__dirname, "../../data/user.json");
-    #userDataList = JSON.parse(fs.readFileSync(this.#dataFilePath));
-
-    defaultStructPath = path.join(__dirname,"./userStruct.json")
-    defaultDataStruct = JSON.parse(fs.readFileSync(this.defaultStructPath))
-
-    constructor( userID ) {
-
-        if (!this.#userDataList[userID]) {
-            this.#userDataList[userID] = this.defaultDataStruct;
-        }
-        
-        this.data = this.#userDataList[userID];
-        
-        this.saveData();
+    constructor( user ) {
+        this.user = user
     }
 
-    saveData() {
-        fs.writeFileSync(this.#dataFilePath, JSON.stringify(this.#userDataList, null, 2));
+    async addUser() {
+        await query(
+            "insert into economy.bank (id) values (?)",
+            [this.user.id]
+        )
+    }
+
+    async getUser() {
+        const [result] = await query(
+            "select pocket, bank, bank_limit from economy.bank where id=?",
+            [ this.user.id ]
+        )
+        return result[0] || { pocket: 0, bank: 0, bank_limit: 5000 };
     }
 }
 

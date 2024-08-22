@@ -15,15 +15,16 @@ module.exports = {
     async execute(interaction) {
         const user = interaction.options.getUser("user") == null? interaction.user : interaction.options.getUser("user");
 
-        const data = new Economy(user.id).data;
-        
+        const economy = new Economy(user);
+        const userData = await economy.getUser();
+
         const balanceEmbed = new EmbedBuilder()
             .setColor("Blurple")
             .setTitle(`${user.globalName}'s Balance`)
             .setAuthor({ name: user.username, iconURL: user.avatarURL({ size: 4096 }) })
             .addFields(
-                { name: "Pocket", value: `${data.pocket}`, inline: true},
-                { name: "Bank", value: `${data.bank}/${data.bankLimit}`, inline: true}
+                { name: "Pocket", value: `${userData.pocket}`, inline: true},
+                { name: "Bank", value: `${userData.bank}/${userData.bank_limit}`, inline: true}
             )
 
         await interaction.reply({ embeds: [balanceEmbed] });

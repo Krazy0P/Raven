@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS server_logs;
-CREATE DATABASE IF NOT EXISTS user_logs;
+CREATE DATABASE IF NOT EXISTS economy;
 
 USE server_logs;
 
@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS template (
     reason          VARCHAR(512)                NULL,
     guild_id        BIGINT          UNSIGNED    NOT NULL
 );
-
 
 CREATE TABLE IF NOT EXISTS ban_logs     LIKE template;
 CREATE TABLE IF NOT EXISTS unban_logs   LIKE template;
@@ -36,3 +35,11 @@ CREATE TABLE IF NOT EXISTS command_logs (
 );
 
 
+USE economy;
+
+CREATE TABLE IF NOT EXISTS bank (
+    id              BIGINT      UNSIGNED    NOT NULL,
+    pocket          BIGINT      UNSIGNED    NOT NULL    DEFAULT 0,
+    bank            BIGINT      UNSIGNED    NOT NULL    DEFAULT 0,
+    bank_limit      BIGINT      UNSIGNED    NOT NULL    DEFAULT 5000
+);
