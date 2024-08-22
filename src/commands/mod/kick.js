@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
-const { Guild, LogType } = require("../../info/guild");
+const { Logs, LogType } = require("../../info/guild");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,10 +18,11 @@ module.exports = {
                 .setName("reason")
                 .setDescription("Specify a reason for the kick")
                 .setRequired(false)
+                .setMaxLength(512)
         ),
 
     async execute(interaction) {
-        const user = interaction.options.getUser("user");
+        const user = interaction.options.getUser("user");   
         const reason = interaction.options.getString("reason") || "No reason was specified";
         
         const guildUser = await interaction.guild.members.fetch({ user: user.id, force: true}).catch((error) => {});
@@ -46,11 +47,10 @@ module.exports = {
             .setColor('Green')
             .setDescription(`${user} has been kicked successfully. | ${reason}`);
 
-        await user.send({ embeds: [userEmbed]});
+        const logs = new Logs();
+        logs.appendLog(LogType.kick,interaction);
 
-        const server = new Guild(interaction.guild.id);
-        server.logs.appendLog(LogType.kick,interaction, reason);
-        server.saveData();
+        await user.send({ embeds: [userEmbed]});
         
         await guildUser.kick({ reason:reason }).catch((error) => {
             console.log(error)

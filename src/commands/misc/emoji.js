@@ -8,17 +8,17 @@ module.exports = {
         .setDMPermission(false),
     
     async execute(interaction) {
-
-        const guildId = await interaction.guild.id;
-
-        const emojiGuild = new Guild(guildId);
+        const emojiGuild = new Guild(interaction);
 
         const coolDown = 10; // cooldown in seconds
 
-        if ((emojiGuild.getTimestamp() + (coolDown * 1000)) > (interaction.id / 4194304 + 1420070400000)) {
-            return await interaction.reply(`You can use the command again in <t:${parseInt(emojiGuild.getTimestamp()/1000) + (coolDown - 10)}:R>`)
+        const timestamp = await emojiGuild.getTimestamp();
+        const emojiList = await emojiGuild.getEmojis();       
+
+        if ((timestamp + (coolDown * 1000)) > (interaction.id / 4194304 + 1420070400000)) {
+            return await interaction.reply(`You can use the command again in <t:${parseInt(timestamp/1000) + (coolDown)}:R>`)
         } else {
-            emojiGuild.updateTimestmap(parseInt(interaction.id / 4194304) + 1420070400000);
+            await emojiGuild.updateTimestamp();
         }
 
         const response = await fetch("https://emoji.gg/");
@@ -36,14 +36,14 @@ module.exports = {
 
         let i = 1;
 
-        for (;emojiGuild.getEmojis().includes(emojiID) && i <= emojis.length;i++) {
+        for (;emojiList.includes(emojiID) && i <= emojis.length;i++) {
             emojis = emojis.splice(emojis.indexOf(emojiID),1);
             emojiID = emojis.at(Number(Math.random() * emojis.length));
         }
         if (i===emojis.length) {
             return await interaction.reply("Oops! something went wrong");
         } else {
-            emojiGuild.appendEmojis(emojiID);
+            await emojiGuild.updateEmojis(emojiID);
         }
 
 

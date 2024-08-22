@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
-const { Guild, LogType } = require("../../info/guild");
+const { Guild, Logs, LogType } = require("../../info/guild");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,6 +18,7 @@ module.exports = {
                 .setName("reason")
                 .setDescription("Specify a reason for the ban")
                 .setRequired(false)
+                .setMaxLength(512)
         ),
 
     async execute(interaction) {
@@ -36,9 +37,8 @@ module.exports = {
             })
         }
 
-        const server = new Guild(interaction.guild.id);
-        server.logs.appendLog(LogType.ban, interaction, reason);
-        server.saveData();
+        const logs = new Logs();
+        logs.appendLog(LogType.ban, interaction);
 
         if (guildUser) {
             const userEmbed = new EmbedBuilder()
