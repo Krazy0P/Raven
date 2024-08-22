@@ -26,4 +26,4 @@ async function query(args, param) {
     }
 }
 
-module.exports = { connection, query }
+module.exports = { query }
