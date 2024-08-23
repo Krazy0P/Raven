@@ -10,16 +10,7 @@ module.exports = {
     async execute(interaction) {
         const emojiGuild = new Guild(interaction);
 
-        const coolDown = 10; // cooldown in seconds
-
-        const timestamp = await emojiGuild.getTimestamp();
         const emojiList = await emojiGuild.getEmojis();       
-
-        if ((timestamp + (coolDown * 1000)) > (interaction.id / 4194304 + 1420070400000)) {
-            return await interaction.reply(`You can use the command again in <t:${parseInt(timestamp/1000) + (coolDown)}:R>`)
-        } else {
-            await emojiGuild.updateTimestamp();
-        }
 
         const response = await fetch("https://emoji.gg/");
         const body = await response.text();
