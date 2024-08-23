@@ -9,13 +9,7 @@ const connection = mysql.createConnection({
     database: 'server_logs'
 }).promise();
 
-connection.connect((err) => {
-    if (err) {
-        console.error("Error connecting to the database:", err.stack);
-        return;
-    }
-    console.log("Connected to the database");
-});
+connection.connect();
 
 async function query(args, param) {
 
