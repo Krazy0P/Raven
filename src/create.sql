@@ -9,8 +9,9 @@ CREATE TABLE IF NOT EXISTS template (
     mod_id          BIGINT          UNSIGNED    NOT NULL,
     convict_name    VARCHAR(32)                 NOT NULL,
     convict_id      BIGINT          UNSIGNED    NOT NULL,
-    reason          VARCHAR(512)                NULL,
-    guild_id        BIGINT          UNSIGNED    NOT NULL
+    guild_name      VARCHAR(100)                NOT NULL,
+    guild_id        BIGINT          UNSIGNED    NOT NULL,
+    reason          VARCHAR(512)                NULL
 );
 
 CREATE TABLE IF NOT EXISTS ban_logs     LIKE template;
@@ -34,6 +35,10 @@ CREATE TABLE IF NOT EXISTS command_logs (
     timestamp       BIGINT          UNSIGNED    NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS appeals (
+    id              BIGINT          UNSIGNED    NOT NULL,
+    appeal          VARCHAR(512)                NOT NULL
+);
 
 USE economy;
 

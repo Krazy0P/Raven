@@ -16,6 +16,8 @@ const client = new Client({
 
 client.commands = new Collection();
 client.cooldowns = new Collection();
+client.buttons = new Collection();
+client.modals = new Collection();
 
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -46,6 +48,32 @@ for (const file of eventFiles) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {
         client.on(event.name, (...args) => event.execute(...args));
+    }
+}
+
+const componentFolderPath = path.join(__dirname, "components");
+const componentFolders = fs.readdirSync(componentFolderPath);
+
+for (const folder of componentFolders) {
+    const folderPath = path.join(componentFolderPath, folder);
+    const subFolders = fs.readdirSync(folderPath);
+
+    for (const file of subFolders) {
+        const filePath = path.join(folderPath,file);
+        const component = require(filePath);
+
+        if ("data" in component && "execute" in component) {
+            switch (folder) {
+                case "buttons":
+                    client.buttons.set(component.data.data.custom_id, component);
+                    break;
+                case "modals":
+                    client.modals.set(component.data.data.custom_id,component);
+                    break;
+            }
+        } else {
+            console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+        }
     }
 }
 

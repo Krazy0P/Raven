@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -22,7 +22,11 @@ module.exports = {
             .setThumbnail("https://i.pinimg.com/564x/11/b2/cd/11b2cdcdc580c7a6e64f3343eb02d1be.jpg")
             .setTimestamp()
             .setFooter({ text: "Made with Warmth", iconURL: "https://cdn.discordapp.com/emojis/883003301132632085.gif?size=96" });
-
-        await interaction.reply({ embeds: [embed] });
+        const btn = interaction.client.buttons.get('appeal').data;
+        btn.setLabel("something")
+        console.log(btn)
+        const row = new ActionRowBuilder()
+            .addComponents(btn);
+        await interaction.reply({ embeds: [embed], components: [row] });
     },
 };

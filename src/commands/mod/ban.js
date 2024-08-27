@@ -1,5 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits, ActionRowBuilder } = require("discord.js");
 const { appendLog, LogType } = require("../../info/mod");
+const appeal = require("../../components/buttons/appeal");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -37,13 +38,21 @@ module.exports = {
             })
         }
 
-        appendLog(LogType.ban, interaction);
+        const log = await appendLog(LogType.ban, interaction);
+        const timeId = log[0];
 
         if (guildUser) {
             const userEmbed = new EmbedBuilder()
                 .setColor("NotQuiteBlack")
-                .setDescription(`Hey ${user}, You have been banned from ${guildUser.guild.name} | ${reason}`);
-            await user.send({ embeds: [userEmbed] });
+                .setDescription(`Hey ${user}, You have been banned from ${interaction.guild} | ${reason}`);
+
+            const btn = appeal.data;
+
+            btn.setCustomId(`appeal_id_${timeId.toString(16)}`);
+            
+            const row = new ActionRowBuilder()
+                .addComponents(btn);
+            await user.send({ embeds: [userEmbed], components: [row] });
         }
 
         const guildEmbed = new EmbedBuilder()
