@@ -12,7 +12,6 @@ module.exports = {
 
         const idIndex = interaction.customId.indexOf("_id_") + 4;
         const id = interaction.customId.substring(idIndex);
-        console.log(id);
         modal.setCustomId(`${modalname}_id_${id}`);
         await interaction.showModal(modal);
     }
