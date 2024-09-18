@@ -7,8 +7,8 @@ dotenv.config();
 
 const client = new Client({
     intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildPresences
 	],
@@ -76,6 +76,5 @@ for (const folder of componentFolders) {
         }
     }
 }
-
 
 client.login(process.env.DISCORD_TOKEN);
