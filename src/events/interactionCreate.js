@@ -2,6 +2,7 @@ const { Events, Collection } = require("discord.js");
 
 module.exports = {
     name: Events.InteractionCreate,
+    
     async execute(interaction) {
         let interactionAction = null;
         let interactionActionName = null;
