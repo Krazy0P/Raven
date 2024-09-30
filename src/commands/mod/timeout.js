@@ -25,6 +25,7 @@ module.exports = {
                 .setName("reason")
                 .setDescription("Specify a reason for the ban")
                 .setRequired(false)
+                .setMaxLength(512)
         ),
 
     async execute(interaction) {
