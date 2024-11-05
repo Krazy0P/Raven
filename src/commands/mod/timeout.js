@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionFlagsBits, EmbedBuilder } = require("discord.js");
-const { appendLog, LogType } = require("../../info/mod");
+const { appendLog, LogType, calcDuration } = require("../../info/mod");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -33,12 +33,7 @@ module.exports = {
         const time = interaction.options.getString("time");
         const reason = interaction.options.getString("reason") || "No reason was specified";
         
-        const duration = {
-            s: (str) => parseInt(str),
-            m: (str) => parseInt(str) * 60,
-            h: (str) => parseInt(str) * 60 * 60,
-            d: (str) => parseInt(str) * 60 * 60 * 24
-        };
+        const duration = calcDuration;
         
         const guildUser = await interaction.guild.members.fetch({ user: user.id, force: true}).catch((error) => {});
         
@@ -62,7 +57,7 @@ module.exports = {
         let timeDuration = duration[time.at(-1)](parseInt(time.substring(0, time.length - 1)));
 
         if (timeDuration > 2419200) {
-            timeDuration = 2419200
+            timeDuration = 2419200;
         } else if (timeDuration == 0) {
             return await interaction.reply({
                 content: "Time duration cannot be zero",
