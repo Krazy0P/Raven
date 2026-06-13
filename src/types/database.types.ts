@@ -103,6 +103,51 @@ export type Database = {
         }
         Relationships: []
       }
+      economy: {
+        Row: {
+          bank: number | null
+          bank_limit: number | null
+          daily_streak: number | null
+          id: string
+          last_crime: string | null
+          last_daily: string | null
+          last_monthly: string | null
+          last_weekly: string | null
+          last_work: string | null
+          user_id: string
+          wallet: number | null
+          work_hours: number | null
+        }
+        Insert: {
+          bank?: number | null
+          bank_limit?: number | null
+          daily_streak?: number | null
+          id?: string
+          last_crime?: string | null
+          last_daily?: string | null
+          last_monthly?: string | null
+          last_weekly?: string | null
+          last_work?: string | null
+          user_id: string
+          wallet?: number | null
+          work_hours?: number | null
+        }
+        Update: {
+          bank?: number | null
+          bank_limit?: number | null
+          daily_streak?: number | null
+          id?: string
+          last_crime?: string | null
+          last_daily?: string | null
+          last_monthly?: string | null
+          last_weekly?: string | null
+          last_work?: string | null
+          user_id?: string
+          wallet?: number | null
+          work_hours?: number | null
+        }
+        Relationships: []
+      }
       "level up channel": {
         Row: {
           channel_id: string
