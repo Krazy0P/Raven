@@ -29,9 +29,7 @@ export default {
 
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply();
-    const eco = await getOrCreateUser(
-      interaction.user.id,
-    );
+    const eco = await getOrCreateUser(interaction.user.id);
     const remaining = isOnCooldown(eco.last_work, COOLDOWN);
 
     if (remaining > 0) {
@@ -53,7 +51,10 @@ export default {
     await addToWallet(interaction.user.id, earned);
     await supabase
       .from("economy")
-      .update({ last_work: new Date().toISOString() })
+      .update({
+        last_work: new Date().toISOString(),
+        work_hours: eco.work_hours! + 1,
+      })
       .eq("user_id", interaction.user.id);
 
     return interaction.editReply({
