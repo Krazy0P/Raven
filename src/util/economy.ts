@@ -43,6 +43,14 @@ export function isOnCooldown(
   return 0;
 }
 
+export function msUntilMidnight(): number {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+
+  return midnight.getTime() - now.getTime();
+}
+
 export function formatCooldown(ms: number): string {
   const s = Math.floor(ms / 1000);
   const m = Math.floor(s / 60);

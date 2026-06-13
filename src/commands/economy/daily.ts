@@ -8,7 +8,7 @@ import {
   getOrCreateUser,
   addToWallet,
   formatCoins,
-  isOnCooldown,
+  msUntilMidnight,
   formatCooldown,
 } from "@/util/economy";
 import supabase from "@/util/supabase";
@@ -24,15 +24,22 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply();
     const eco = await getOrCreateUser(interaction.user.id);
-    const remaining = isOnCooldown(eco.last_daily, COOLDOWN);
+    const due_date = new Date(eco.last_daily!);
+    due_date.setDate(due_date.getDate() + 1);
+    const today = new Date();
 
-    if (remaining > 0) {
+    if (today.toDateString() !== due_date.toDateString()) {
+      const now = new Date();
+      const midnight = new Date(now);
+      midnight.setHours(24, 0, 0, 0);
+      const seconds = Math.floor(midnight.getTime() / 1000);
+
       return interaction.editReply({
         embeds: [
           new EmbedBuilder()
             .setColor(Colors.Red)
             .setDescription(
-              `Aw man... Come back in **${formatCooldown(remaining)}**`,
+              `Aw man... Come back in **<t:${seconds}:R>**`,
             ),
         ],
       });
