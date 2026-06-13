@@ -8,13 +8,10 @@ import {
   getOrCreateUser,
   addToWallet,
   formatCoins,
-  msUntilMidnight,
-  formatCooldown,
 } from "@/util/economy";
 import supabase from "@/util/supabase";
 
 const DAILY_AMOUNT = 1000;
-const COOLDOWN = 24 * 60 * 60 * 1000;
 
 export default {
   data: new SlashCommandBuilder()
