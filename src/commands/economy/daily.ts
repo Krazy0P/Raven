@@ -9,7 +9,6 @@ import {
   addToWallet,
   formatCoins,
 } from "@/util/economy";
-import supabase from "@/util/supabase";
 
 const DAILY_AMOUNT = 1000;
 
@@ -21,41 +20,51 @@ export default {
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply();
     const eco = await getOrCreateUser(interaction.user.id);
-    const due_date = new Date(eco.last_daily!);
-    due_date.setDate(due_date.getDate() + 1);
+
     const today = new Date();
 
-    if (today.toDateString() !== due_date.toDateString()) {
-      const now = new Date();
-      const midnight = new Date(now);
-      midnight.setHours(24, 0, 0, 0);
-      const seconds = Math.floor(midnight.getTime() / 1000);
+    if (eco.last_daily) {
+      const lastClaim = new Date(eco.last_daily);
 
-      return interaction.editReply({
-        embeds: [
-          new EmbedBuilder()
-            .setColor(Colors.Red)
-            .setDescription(
-              `Aw man... Come back in **<t:${seconds}:R>**`,
-            ),
-        ],
-      });
+      // already claimed today
+      if (today.toDateString() === lastClaim.toDateString()) {
+        const midnight = new Date(today);
+        midnight.setHours(24, 0, 0, 0);
+        const seconds = Math.floor(midnight.getTime() / 1000);
+
+        return interaction.editReply({
+          embeds: [
+            new EmbedBuilder()
+              .setColor(Colors.Red)
+              .setDescription(`Aw man... Come back **<t:${seconds}:R>**`),
+          ],
+        });
+      }
+
+      // check if streak should continue or reset
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      if (lastClaim.toDateString() !== yesterday.toDateString()) {
+        // more than 1 day gap → reset streak
+        eco.daily_streak = 0;
+      }
     }
 
-    const daily = DAILY_AMOUNT + eco.daily_streak! * 200;
+    eco.daily_streak = (eco.daily_streak ?? 0) + 1;
+    const daily = DAILY_AMOUNT + (eco.daily_streak - 1) * 200;
 
     await addToWallet(interaction.user.id, daily);
 
-    await supabase
-      .from("economy")
-      .update({ last_daily: new Date().toISOString() })
-      .eq("user_id", interaction.user.id);
+    eco.last_daily = new Date().toISOString();
 
     return interaction.editReply({
       embeds: [
         new EmbedBuilder()
           .setColor(Colors.Green)
-          .setDescription(`You claimed your daily ${formatCoins(daily)}!`),
+          .setDescription(
+            `You claimed your daily ${formatCoins(daily)}!\n🔥 Streak: **${eco.daily_streak}**`,
+          ),
       ],
     });
   },

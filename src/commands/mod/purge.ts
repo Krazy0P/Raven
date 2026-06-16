@@ -37,7 +37,10 @@ export default {
         `${deleted.size} messages has been deleted successfully.`,
       );
 
-    await interaction.editReply({ embeds: [guildEmbed] });
-    setTimeout(() => interaction.deleteReply(), 2000);
+    const message = await channel.send({
+      embeds: [guildEmbed],
+    });
+
+    setTimeout(() => message.delete().catch(() => {}), 2000);
   },
 };

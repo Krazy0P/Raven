@@ -1,0 +1,99 @@
+{
+  "catppuccin": {
+    "latte": {
+      "type": "light",
+      "colors": {
+        "blue": "#1e66f5",
+        "lavender": "#7287fd",
+        "sapphire": "#209fb5",
+        "sky": "#04a5e5",
+        "teal": "#179299",
+        "green": "#40a02b",
+        "yellow": "#df8e1d",
+        "peach": "#fe640b",
+        "maroon": "#e64553",
+        "red": "#d20f39",
+        "mauve": "#8839ef",
+        "pink": "#ea76cb",
+        "flamingo": "#dd7878",
+        "rosewater": "#dc8a78"
+      }
+    },
+    "frappe": {
+      "type": "dark",
+      "colors": {
+        "blue": "#8caaee",
+        "lavender": "#babbf1",
+        "sapphire": "#85c1dc",
+        "sky": "#99d1db",
+        "teal": "#81c8be",
+        "green": "#a6d189",
+        "yellow": "#e5c890",
+        "peach": "#ef9f76",
+        "maroon": "#ea999c",
+        "red": "#e78284",
+        "mauve": "#ca9ee6",
+        "pink": "#f4b8e4",
+        "flamingo": "#eebebe",
+        "rosewater": "#f2d5cf"
+      }
+    },
+    "macchiato": {
+      "type": "dark",
+      "colors": {
+        "blue": "#8aadf4",
+        "lavender": "#b7bdf8",
+        "sapphire": "#7dc4e4",
+        "sky": "#91d7e3",
+        "teal": "#8bd5ca",
+        "green": "#a6da95",
+        "yellow": "#eed49f",
+        "peach": "#f5a97f",
+        "maroon": "#ee99a0",
+        "red": "#ed8796",
+        "mauve": "#c6a0f6",
+        "pink": "#f5bde6",
+        "flamingo": "#f0c6c6",
+        "rosewater": "#f4dbd6"
+      }
+    },
+    "mocha": {
+      "type": "dark",
+      "colors": {
+        "blue": "#89b4fa",
+        "lavender": "#b4befe",
+        "sapphire": "#74c7ec",
+        "sky": "#89dceb",
+        "teal": "#94e2d5",
+        "green": "#a6e3a1",
+        "yellow": "#f9e2af",
+        "peach": "#fab387",
+        "maroon": "#eba0ac",
+        "red": "#f38ba8",
+        "mauve": "#cba6f7",
+        "pink": "#f5c2e7",
+        "flamingo": "#f2cdcd",
+        "rosewater": "#f5e0dc"
+      }
+    },
+    "solid": {
+      "type": "neutral",
+      "colors": {
+        "amethyst": "#0B032D",
+        "pink": "#ff6978",
+        "steel": "#95a3b3",
+        "clay": "#e5b769",
+        "black": "#040303ff",
+        "plum": "#ec9dedff",
+        "crimson": "#9a031eff",
+        "cyan": "#97efe9ff",
+        "cream": "#f3ffb9ff",
+        "Pale Sky": "cae5ff",
+        "Tomato": "f06543",
+        "Baby Blue Ice": "89bbfe",
+        "Light Green": "99f7ab",
+        "Jet Black": "092327"
+      }
+    }
+  }
+}

@@ -31,7 +31,7 @@ export default {
         },
         {
           name: "Bank",
-          value: `${formatCoins(eco.bank!)}/**${eco.bank_limit?.toLocaleString()}**`,
+          value: `${formatCoins(eco.bank!)}/${eco.bank_limit?.toLocaleString()}`,
           inline: true,
         },
         {

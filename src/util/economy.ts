@@ -30,7 +30,7 @@ export async function removeFromWallet(userId: string, amount: number) {
 }
 
 export function formatCoins(amount: number): string {
-  return ` **🪙 ${amount.toLocaleString()}**`;
+  return ` 🪙 ${amount.toLocaleString()}`;
 }
 
 export function isOnCooldown(

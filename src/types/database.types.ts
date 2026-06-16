@@ -103,6 +103,21 @@ export type Database = {
         }
         Relationships: []
       }
+      "colour theme": {
+        Row: {
+          colour_list: Json
+          guild_id: string
+        }
+        Insert: {
+          colour_list: Json
+          guild_id: string
+        }
+        Update: {
+          colour_list?: Json
+          guild_id?: string
+        }
+        Relationships: []
+      }
       economy: {
         Row: {
           bank: number | null
