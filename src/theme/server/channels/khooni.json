@@ -1,0 +1,162 @@
+{
+  "categories": [
+    {
+      "name": "— Static Frequency",
+      "channels": [
+        {
+          "name": "🔥・campfire",
+          "type": 2
+        },
+        {
+          "name": "🏚️・haunted-house",
+          "type": 2
+        },
+        {
+          "name": "🍿・projection-room",
+          "type": 2
+        }
+      ]
+    },
+    {
+      "name": "— Clockwork Musicians",
+      "channels": [
+        {
+          "name": "🎧・haunted-music",
+          "type": 2
+        },
+        {
+          "name": "⌨️・songlist",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Forbidden Woods",
+      "channels": [
+        {
+          "name": "👁️・unsolved-mysteries",
+          "type": 0
+        },
+        {
+          "name": "🎮・survival-horror",
+          "type": 0
+        },
+        {
+          "name": "👻・spooky-discussion",
+          "type": 2
+        },
+        {
+          "name": "📸・strange-sightings",
+          "type": 0
+        },
+        {
+          "name": "🔮・paranormal-chat",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Clockwork Servants",
+      "channels": [
+        {
+          "name": "🐸・dank-memer",
+          "type": 0
+        },
+        {
+          "name": "🌳・yggdrasil",
+          "type": 0
+        },
+        {
+          "name": "🦉・owo",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Foyer",
+      "channels": [
+        {
+          "name": "🕯️・initiation",
+          "type": 0
+        },
+        {
+          "name": "📜・manifesto",
+          "type": 0
+        },
+        {
+          "name": "📣・town-notices",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Campfire Chronicles",
+      "channels": [
+        {
+          "name": "🔔・fresh-blood",
+          "type": 0
+        },
+        {
+          "name": "🖋️・submit-your-nightmares",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Village",
+      "channels": [
+        {
+          "name": "🧠・mad-ramblings",
+          "type": 0
+        },
+        {
+          "name": "🖼️・hallway-of-mirrors",
+          "type": 0
+        },
+        {
+          "name": "☕・general",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Carnival of Shadows",
+      "channels": [
+        {
+          "name": "🎃・events",
+          "type": 0
+        },
+        {
+          "name": "💉・art-and-creations",
+          "type": 0
+        }
+      ]
+    },
+    {
+      "name": "— Supernatural Services",
+      "channels": [
+        {
+          "name": "❓・faq",
+          "type": 0
+        },
+        {
+          "name": "☎️・ghost-support",
+          "type": 15
+        },
+        {
+          "name": "💭・creepy-suggestions",
+          "type": 15
+        }
+      ]
+    },
+    {
+      "name": "No Category",
+      "channels": [
+        {
+          "name": "tod",
+          "type": 0
+        }
+      ]
+    }
+  ]
+}
