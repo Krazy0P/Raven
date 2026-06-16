@@ -8,7 +8,7 @@
     "dev": "bun run deploycmd && bun run start", 
     "deploycmd": "bun run src/deploy.ts",
     "delcmd": "bun run src/delcmd.ts",
-    "refreshdb": "bunx supabase gen types typescript --project-id YOUR_PROJECT_ID > ./src/types/database.types.ts"
+    "refreshdb": "bun run src/syncdb.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"

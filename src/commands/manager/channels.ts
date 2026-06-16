@@ -4,11 +4,14 @@ import {
   InteractionContextType,
   PermissionFlagsBits,
   SlashCommandBuilder,
+  type Channel,
 } from "discord.js";
 
 import fs from "node:fs";
 
 import channelData from "@/theme/server/channels/khooni.json";
+import supabase from "@/util/supabase";
+import logger from "@/util/logger";
 
 export default {
   data: new SlashCommandBuilder()
@@ -31,12 +34,37 @@ export default {
             .setDescription("Select the server theme")
             .setRequired(true)
             .addChoices(
-              { name: "Static Frequency", value: "khooni" },
-              { name: "Khooni Monday", value: "khooni" },
-              { name: "Khooni Monday", value: "khooni" },
-              { name: "Khooni Monday", value: "khooni" },
-              { name: "Khooni Monday", value: "khooni" },
-              { name: "Khooni Monday", value: "khooni" },
+              { name: "Static Frequency", value: "0" },
+              { name: "Clockwork Musicians", value: "1" },
+              { name: "Forbidden Woods", value: "2" },
+              { name: "Clockwork Servants", value: "3" },
+              { name: "Foyer", value: "4" },
+              { name: "Campfire Chronicles", value: "5" },
+              { name: "Village", value: "6" },
+              { name: "Carnival of Shadows", value: "7" },
+              { name: "Supernatural Services", value: "8" },
+            ),
+        ),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("delete")
+        .setDescription("Deletes the channels")
+        .addStringOption((option) =>
+          option
+            .setName("category")
+            .setDescription("Select the server theme")
+            .setRequired(true)
+            .addChoices(
+              { name: "Static Frequency", value: "0" },
+              { name: "Clockwork Musicians", value: "1" },
+              { name: "Forbidden Woods", value: "2" },
+              { name: "Clockwork Servants", value: "3" },
+              { name: "Foyer", value: "4" },
+              { name: "Campfire Chronicles", value: "5" },
+              { name: "Village", value: "6" },
+              { name: "Carnival of Shadows", value: "7" },
+              { name: "Supernatural Services", value: "8" },
             ),
         ),
     ),
@@ -51,6 +79,10 @@ export default {
 
     if (subcommand === "create") {
       return handleCreateColours(interaction);
+    }
+
+    if (subcommand === "delete") {
+      return handleDeleteColours(interaction);
     }
   },
 };
@@ -129,8 +161,108 @@ function handleCopyChannels(interaction: ChatInputCommandInteraction) {
   });
 }
 
-function handleCreateColours(interaction: ChatInputCommandInteraction) {
-  return interaction.reply({
-    content: "working on it",
+async function handleCreateColours(interaction: ChatInputCommandInteraction) {
+  const index = parseInt(interaction.options.getString("category")!);
+  const channelList = channelData.categories[index]?.channels!;
+  const categoryName = channelData.categories[index]?.name!;
+  const guild = interaction.guild!;
+
+  const channelIds: Record<string, string> = {};
+
+  const { data, error } = await supabase
+    .from("channel theme")
+    .select("*")
+    .eq("guild_id", guild.id);
+
+  if (data?.length) {
+    return interaction.editReply({
+      content: "Seems like it already already exist",
+    });
+  }
+
+
+  const category = await guild.channels.create({
+    name: categoryName,
+    type: ChannelType.GuildCategory,
   });
+
+  try {
+    await Promise.all(
+      channelList.map(async (value, index) => {
+        const channel = (await category.children
+          .create({
+            name: value.name,
+            type: value.type,
+          })
+          .catch(() => null)) as Channel;
+
+        if (channel) {
+          channelIds[value.name] = channel.id;
+        }
+      }),
+    );
+
+    await supabase.from("channel theme").insert({
+      guild_id: guild.id,
+      category_name: categoryName,
+      category_id: category.id,
+      channel_list: channelIds,
+    });
+
+    return interaction.editReply({
+      content: "Created the channels",
+    });
+  } catch (e) {
+    logger.error(e);
+    return interaction.editReply({
+      content: "Something went wrong",
+    });
+  }
+}
+
+async function handleDeleteColours(interaction: ChatInputCommandInteraction) {
+  const index = parseInt(interaction.options.getString("category")!);
+  const categoryName = channelData.categories[index]!.name!;
+  const guild = interaction.guild!;
+
+  const { data, error } = await supabase
+    .from("channel theme")
+    .select("*")
+    .eq("guild_id", guild.id)
+    .eq("category_name", categoryName)
+    .single();
+
+  if (!data) {
+    return interaction.editReply({
+      content: "Seems like it does not already exist",
+    });
+  }
+
+  const categoryId = data.category_id;
+  const channelList = data.channel_list as Record<string, string>;
+
+  try {
+    await Promise.all(
+      Object.entries(channelList).map((value) =>
+        guild.channels.delete(value[1]).catch(() => {}),
+      ),
+    );
+
+    await guild.channels.delete(categoryId).catch(() => {});
+
+    await supabase
+      .from("channel theme")
+      .delete()
+      .eq("guild_id", guild.id)
+      .eq("category_name", categoryName);
+
+    return interaction.editReply({
+      content: "Deleted all the channels!",
+    });
+  } catch (e) {
+    logger.error(e);
+    return interaction.editReply({
+      content: "Seems like something went wrong",
+    });
+  }
 }

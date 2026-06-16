@@ -148,15 +148,6 @@
           "type": 15
         }
       ]
-    },
-    {
-      "name": "No Category",
-      "channels": [
-        {
-          "name": "tod",
-          "type": 0
-        }
-      ]
     }
   ]
 }

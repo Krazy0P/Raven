@@ -76,6 +76,27 @@ export type Database = {
           },
         ]
       }
+      "channel theme": {
+        Row: {
+          category_id: string
+          category_name: string
+          channel_list: Json
+          guild_id: string
+        }
+        Insert: {
+          category_id: string
+          category_name: string
+          channel_list: Json
+          guild_id: string
+        }
+        Update: {
+          category_id?: string
+          category_name?: string
+          channel_list?: Json
+          guild_id?: string
+        }
+        Relationships: []
+      }
       "chat xp": {
         Row: {
           guild_id: string
