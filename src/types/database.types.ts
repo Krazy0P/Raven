@@ -199,6 +199,24 @@ export type Database = {
         }
         Relationships: []
       }
+      twitter_feeds: {
+        Row: {
+          channel_id: string
+          last_tweet_id: string | null
+          username: string
+        }
+        Insert: {
+          channel_id: string
+          last_tweet_id?: string | null
+          username: string
+        }
+        Update: {
+          channel_id?: string
+          last_tweet_id?: string | null
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

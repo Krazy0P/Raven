@@ -4,6 +4,7 @@ import {
   PermissionFlagsBits,
   SlashCommandBuilder,
   type HexColorString,
+  type RoleData,
 } from "discord.js";
 import logger from "@/util/logger";
 import supabase from "@/util/supabase";
@@ -42,7 +43,37 @@ export default {
             .setName("delete")
             .setDescription("Deletes the Colour Roles from the server"),
         ),
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("create")
+        .setDescription("Create a new role")
+        .addStringOption((option) =>
+          option
+            .setName("name")
+            .setDescription("Name for the role")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("color")
+            .setDescription("Color hex for role")
+            .setRequired(false)
+        )
+        .addBooleanOption((option) =>
+          option
+            .setName("hoist")
+            .setDescription("default: false")
+            .setRequired(false)
+        )
+        .addBooleanOption((option) =>
+          option
+            .setName("mentionable")
+            .setDescription("default: false")
+            .setRequired(false)
+        )
     ),
+
   async execute(interaction: ChatInputCommandInteraction) {
     await interaction.deferReply();
 
@@ -55,6 +86,12 @@ export default {
 
     if (subcommandGroup === "colours" && subcommand === "delete") {
       return handleDeleteColours(interaction);
+    }
+
+    if (!subcommandGroup && subcommand === "create") {
+      return interaction.editReply({
+        content: "Working..."
+      });
     }
   },
 };

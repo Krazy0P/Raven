@@ -1,9 +1,10 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import loadCommands from "@/loader/cmds";
 import loadEvents from "@/loader/events";
-import loadComponents from "./loader/components";
+import loadComponents from "@/loader/components";
 import registerShutdownHandler from "@/util/exit";
-import logger from "./util/logger";
+import logger from "@/util/logger";
+import  startFreeTwitterFeed  from "@/util/x";
 
 const client: CustomClient = new Client({
   intents: [
@@ -22,6 +23,8 @@ client.modals = new Collection();
 loadCommands(client);
 loadEvents(client);
 loadComponents(client);
+
+startFreeTwitterFeed(client);
 
 registerShutdownHandler(client);
 
