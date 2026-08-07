@@ -11,6 +11,62 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
 - Misc utilities like about, avatar, serverinfo, and whois
 - Slash command registration with deploy/delete scripts
 
+## Commands
+
+<details>
+  <summary><b>chat</b></summary>
+
+  * `leaderboard`
+  * `rank`
+  * `reset_level_up_channel`
+  * `set_level_up_channel`
+</details>
+
+<details>
+  <summary><b>economy</b></summary>
+
+  * `balance`
+  * `coinflip`
+  * `crime`
+  * `daily`
+  * `deposit`
+  * `rob`
+  * `slots`
+  * `withdraw`
+  * `work`
+</details>
+
+<details>
+<summary><b>manager (UNSTABLE)</b></summary>
+
+  * `channels`
+  * `roles`
+</details>
+
+<details>
+<summary><b>misc</b></summary>
+
+  * `about`
+  * `avatar`
+  * `serverinfo`
+  * `whois`
+</details>
+
+<details>
+<summary><b>mod</b></summary>
+
+  * `actionlog`
+  * `ban`
+  * `kick`
+  * `lock`
+  * `modlog`
+  * `purge`
+  * `timeout`
+  * `unban`
+  * `unlock`
+  * `warn`
+</details>
+
 ## Getting Started
 
 ### Prerequisites
@@ -83,23 +139,3 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
   ```bash
   bun run refreshdb
   ```
-
-## Project Structure
-
-Under `src` directory:
-
-- `index.ts` — bot bootstrap and client initialization
-- `deploy.ts` — script to register slash commands with Discord
-- `delcmd.ts` — script to delete registered commands
-- `syncdb.ts` — script to generate Supabase database types
-- `commands/` — slash command definitions organized by category
-- `events/` — event handlers for Discord events
-- `components/` — button and modal interaction handlers
-- `util/` — helper utilities, logging, Supabase client, and Twitter feed process
-- `types/` — generated and shared TypeScript types
-
-
-
-## License
-
-This repository does not include a license file. Add one if you want to make the project publicly reusable.
