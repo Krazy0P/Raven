@@ -73,16 +73,13 @@ export default {
 
     const subcommand = interaction.options.getSubcommand();
 
-    if (subcommand === "copy") {
-      return handleCopyChannels(interaction);
-    }
-
-    if (subcommand === "create") {
-      return handleCreateColours(interaction);
-    }
-
-    if (subcommand === "delete") {
-      return handleDeleteColours(interaction);
+    switch (subcommand) {
+      case "copy":
+        return handleCopyChannels(interaction);
+      case "create":
+        return handleCreateColours(interaction);
+      case "delete":
+        return handleDeleteColours(interaction);
     }
   },
 };
