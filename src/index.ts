@@ -4,7 +4,6 @@ import loadEvents from "@/loader/events";
 import loadComponents from "@/loader/components";
 import registerShutdownHandler from "@/util/exit";
 import logger from "@/util/logger";
-import  startFreeTwitterFeed  from "@/util/x";
 
 const client: CustomClient = new Client({
   intents: [
@@ -24,7 +23,6 @@ loadCommands(client);
 loadEvents(client);
 loadComponents(client);
 
-startFreeTwitterFeed(client);
 
 registerShutdownHandler(client);
 
