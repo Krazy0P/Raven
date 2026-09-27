@@ -7,7 +7,7 @@ import {
   Colors,
   AttachmentBuilder,
 } from "discord.js";
-import expCache from "@/util/messagexp";
+import { getUserExp } from "@/util/messagexp";
 
 export default {
   data: new SlashCommandBuilder()
@@ -23,31 +23,11 @@ export default {
     const user = interaction.options.getUser("user") || interaction.user;
     const guild = interaction.guild!;
 
-    
-    const key = `${user.id}:${guild.id}`;
-
-    if (!expCache.has(key)) {
-      const { data, error } = await supabase
-        .from("chat xp")
-        .upsert(
-          { user_id: user.id, guild_id: guild.id },
-          { onConflict: "user_id,guild_id" },
-        )
-        .select()
-        .single();
-
-      if (error || !data) return;
-
-      expCache.set(key, {
-        xp: data?.xp ?? 0,
-        weekly_xp: data?.xp ?? 0,
-        level: data?.level ?? 1,
-        dirty: false,
-      });
+    const cached = await getUserExp(user.id, guild.id);
+    if (!cached) {
+      await interaction.editReply({ content: "Failed to load user XP data." });
+      return;
     }
-
-    
-    const cached = expCache.get(key)!;
 
     const { count } = await supabase
       .from("chat xp")

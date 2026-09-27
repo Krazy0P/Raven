@@ -1,4 +1,4 @@
-import expCache from "@/util/messagexp";
+import { getUserExp } from "@/util/messagexp";
 import supabase from "@/util/supabase";
 import {
   Colors,
@@ -15,29 +15,9 @@ export default {
   async execute(message: Message) {
     if (message.author.bot || !message.guild) return;
 
-    const key = `${message.author.id}:${message.guild.id}`;
+    const cached = await getUserExp(message.author.id, message.guild.id);
+    if (!cached) return;
 
-    if (!expCache.has(key)) {
-      const { data, error } = await supabase
-        .from("chat xp")
-        .upsert(
-          { user_id: message.author.id, guild_id: message.guild.id },
-          { onConflict: "user_id,guild_id" },
-        )
-        .select()
-        .single();
-
-      if (error || !data) return;
-
-      expCache.set(key, {
-        xp: data?.xp ?? 0,
-        weekly_xp: data?.xp ?? 0,
-        level: data?.level ?? 1,
-        dirty: false,
-      });
-    }
-
-    const cached = expCache.get(key)!;
     cached.xp += 1;
     cached.weekly_xp += 1;
     cached.dirty = true;
