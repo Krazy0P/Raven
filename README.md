@@ -84,15 +84,7 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
    bun install
    ```
 
-3. Create a `.env` file at the project root with the following values:
-
-   ```env
-    DISCORD_TOKEN="DISCORD_BOT_TOKEN"
-    CLIENT_ID="DISCORD_BOT_ID"
-    THRESHOLD_XP="CHAT_XP_THRESHOLD"
-    SUPABASE_PROJECT_ID="SELF_EXPLAINATORY"
-    SUPABASE_SERVICE_ROLE_KEY="FOR_SECURELY_ACCESSING_DATABASE"
-   ```
+3. Create a `.env` file at the project root using `.env.example` values.
 
 ### Running the bot
 

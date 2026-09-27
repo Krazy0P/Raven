@@ -49,7 +49,7 @@ export default {
 
     const embed = new EmbedBuilder()
       .setColor("Green")
-      .setDescription(`Successfully set the channel to ${channel}`);
+      .setDescription(`Successfully set the level up channel to ${channel}`);
 
     await interaction.editReply({
       embeds: [embed],
