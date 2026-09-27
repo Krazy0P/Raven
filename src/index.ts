@@ -4,6 +4,7 @@ import loadEvents from "@/loader/events";
 import loadComponents from "@/loader/components";
 import registerShutdownHandler from "@/util/exit";
 import logger from "@/util/logger";
+import healthCheck from "./util/healthcheck";
 
 const client: CustomClient = new Client({
   intents: [
@@ -25,6 +26,8 @@ loadComponents(client);
 
 
 registerShutdownHandler(client);
+
+healthCheck(client);
 
 setInterval(() => {
   const mem = process.memoryUsage();
