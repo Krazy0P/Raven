@@ -6,7 +6,7 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
 
 - Chat XP and leveling system
 - Economy commands: balance, daily, work, withdraw, deposit, robbery, slots, coinflip
-- Moderation commands: ban, kick, timeout, purge, warn, mod log, action log=
+- Moderation commands: ban, kick, timeout, purge, warn, mod log, action log
 - Misc utilities like about, avatar, serverinfo, and whois
 - Slash command registration with deploy/delete scripts
 
@@ -17,8 +17,8 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
 
   * `leaderboard`
   * `rank`
-  * `reset_level_up_channel`
-  * `set_level_up_channel`
+  * `level channel remove`
+  * `level channel set`
 </details>
 
 <details>
