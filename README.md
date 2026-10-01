@@ -1,6 +1,6 @@
 # Raven
 
-Raven is a Discord bot built with Bun and Discord.js. It provides chat experience points, a full economy system, moderation tools, server utilities integration backed by Supabase.
+Raven is a Discord bot built with Bun and Discord.js. It provides chat experience points, a full economy system, moderation tools, server utilities integration backed by Supabase. You can try out the bot [here](https://discord.com/oauth2/authorize?client_id=1041237161367834694).
 
 ## Features
 
@@ -35,7 +35,6 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
   * `work`
 </details>
 
-<details>
 
 <details>
 <summary><b>misc</b></summary>
@@ -65,9 +64,10 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
 
 ### Prerequisites
 
-- Bun installed
+- [Bun](https://bun.sh/) installed
 - A Discord bot application with a valid bot token
-- A Supabase project for storing data and generating types
+  - If you dont have a bot yet, you can easily make one from [Discord Developer Portal](https://discord.com/developers/home).
+- A [Supabase](https://supabase.com/) project for storing data and generating types
 
 ### Installation
 
@@ -108,7 +108,7 @@ Raven is a Discord bot built with Bun and Discord.js. It provides chat experienc
   bun run start
   ```
 
-- Start in development mode (register commands first, then run):
+- Start in development mode:
 
   ```bash
   bun run dev
